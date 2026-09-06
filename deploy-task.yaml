@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: deploy-to-code-engine
+spec:
+  params:
+    - name: tag
+      default: latest
+  steps:
+    - name: deploy
+      image: icr.io/codeengine/ibmcloud
+      script: |
+        ibmcloud ce application update \
+          --name tax-calculator-app \
+          --image us.icr.io/tax-calculator-ns/tax-calculator:$(params.tag)

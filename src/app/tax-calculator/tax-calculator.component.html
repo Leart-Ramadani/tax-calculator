@@ -1,0 +1,19 @@
+<div class="form-group">
+  <label for="income">Annual Income</label>
+  <input id="income" type="number" [(ngModel)]="income" placeholder="Enter income">
+</div>
+
+<div class="form-group">
+  <label for="taxRate">Tax Rate (%)</label>
+  <input id="taxRate" type="number" [(ngModel)]="taxRate" placeholder="Enter tax rate">
+</div>
+
+<div class="actions">
+  <button (click)="calculateTax()">Calculate</button>
+  <button (click)="reset()">Reset</button>
+</div>
+
+<div class="result" *ngIf="taxAmount > 0">
+  <p>Tax Amount: <strong>{{ taxAmount | number:'1.2-2' }}</strong></p>
+  <p>Net Income: <strong>{{ netIncome | number:'1.2-2' }}</strong></p>
+</div>

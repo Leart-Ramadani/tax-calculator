@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-docker-image
+spec:
+  workspaces:
+    - name: source
+  params:
+    - name: tag
+      default: latest
+  steps:
+    - name: build-and-push
+      image: quay.io/buildah/stable
+      workingDir: $(workspaces.source.path)
+      securityContext:
+        privileged: true
+      script: |
+        buildah bud -t us.icr.io/tax-calculator-ns/tax-calculator:$(params.tag) .
+        buildah push us.icr.io/tax-calculator-ns/tax-calculator:$(params.tag)
